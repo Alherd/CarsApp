@@ -1,13 +1,13 @@
-package com.example.alherd.carapp;
+package com.example.alherd.carapp.activities;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.database.DatabaseHelper;
 

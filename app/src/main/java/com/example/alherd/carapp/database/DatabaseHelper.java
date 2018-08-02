@@ -50,28 +50,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NAME_CAR_MARK + " TEXT, "
                 + COLUMN_ID_COUNTRY_CAR_MARK + " TEXT, "
                 + COLUMN_NAME_FOUNDER_CAR_MARK + " TEXT, "
-                + COLUMN_FOUNDATION_YEAR_CAR_MARK + " TEXT, "
-                + COLUMN_NAME_COUNTRY_MANUFACTURER + " TEXT);");
+                + COLUMN_FOUNDATION_YEAR_CAR_MARK + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_CAR_MODELS
                 + " (" + COLUMN_ID_CAR_MODEL
                 + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NAME_CAR_MODEL + " TEXT, "
                 + COLUMN_ID_CAR_MODEL_MARK + " TEXT, "
-                + COLUMN_COST_CAR_MODEL + " TEXT, "
+                + COLUMN_COST_CAR_MODEL + " INTEGER, "
                 + COLUMN_MODIFICATION_ENGINE_CAR_MODEL + " TEXT, "
-                + COLUMN_DOORS_NUMBER_CAR_MODEL + " TEXT, "
+                + COLUMN_DOORS_NUMBER_CAR_MODEL + " INTEGER, "
                 + COLUMN_BODY_TYPE_CAR_MODEL + " TEXT, "
-                + COLUMN_SEATS_NUMBER_CAR_MODEL + " TEXT, "
+                + COLUMN_SEATS_NUMBER_CAR_MODEL + " INTEGER, "
                 + COLUMN_RELEASE_START_CAR_MODEL + " TEXT, "
                 + COLUMN_RELEASE_END_CAR_MODEL + " TEXT, "
-                + COLUMN_PHOTO_CAR_MODEL + " TEXT, "
-                + COLUMN_NAME_COUNTRY_MANUFACTURER + " TEXT);");
+                + COLUMN_PHOTO_CAR_MODEL + " TEXT);");
+
+        sqLiteDatabase.execSQL("INSERT INTO " + TABLE_MANUFACTURERS + " (" + COLUMN_ID_COUNTRY_MANUFACTURER + ", " +
+                COLUMN_NAME_COUNTRY_MANUFACTURER + ") VALUES ('1', 'USA'),('2','Japan'), ('3', 'Germany');");
+
+        sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MARKS + " (" + COLUMN_ID_CAR_MARK + ", " +
+                COLUMN_NAME_CAR_MARK + "," + COLUMN_ID_COUNTRY_CAR_MARK + "," + COLUMN_NAME_FOUNDER_CAR_MARK + "," +
+                COLUMN_FOUNDATION_YEAR_CAR_MARK + ") VALUES ('1', 'Ford', '1', 'Henry Ford', '1903');");
+
+        sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MODELS + " (" + COLUMN_NAME_CAR_MODEL + ", " +
+                COLUMN_ID_CAR_MODEL_MARK + "," + COLUMN_COST_CAR_MODEL + "," + COLUMN_MODIFICATION_ENGINE_CAR_MODEL + "," +
+                COLUMN_DOORS_NUMBER_CAR_MODEL + "," + COLUMN_BODY_TYPE_CAR_MODEL + "," + COLUMN_SEATS_NUMBER_CAR_MODEL + "," +
+                COLUMN_RELEASE_START_CAR_MODEL + "," + COLUMN_RELEASE_END_CAR_MODEL + "," +
+                COLUMN_PHOTO_CAR_MODEL + ") VALUES " +
+                "('Bronco V', '1', '23000', 'Shelby GT350 5.2 V8 (526 Hp)', '2','526', 'coupe','2','2017', '-', 'photo');");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        onCreate(sqLiteDatabase);
     }
 }

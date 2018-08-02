@@ -5,35 +5,39 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "clinicBase.db";
+    public static final int VERSION = 1;
+    public static final String DATABASE_NAME = "clinicBase.db";
 
-    private static final String TABLE_MANUFACTURERS = "manufacturers";
-    private static final String COLUMN_ID_COUNTRY_MANUFACTURER = "_id_manufacturer";
-    private static final String COLUMN_NAME_COUNTRY_MANUFACTURER = "name_country_manufacturer";
+    public static final String TABLE_MANUFACTURERS = "manufacturers";
+    public static final String COLUMN_ID_COUNTRY_MANUFACTURER = "_id_manufacturer";
+    public static final String COLUMN_NAME_COUNTRY_MANUFACTURER = "name_country_manufacturer";
 
-    private static final String TABLE_CAR_MARKS = "car_marks";
-    private static final String COLUMN_ID_CAR_MARK = "_id_car_mark";
-    private static final String COLUMN_NAME_CAR_MARK = "name_car_mark";
-    private static final String COLUMN_ID_COUNTRY_CAR_MARK = "_id_country_car_mark";
-    private static final String COLUMN_NAME_FOUNDER_CAR_MARK = "name_founder_car_mark";
-    private static final String COLUMN_FOUNDATION_YEAR_CAR_MARK = "foundation_year_car_mark";
+    public static final String TABLE_CAR_MARKS = "car_marks";
+    public static final String COLUMN_ID_CAR_MARK = "_id_car_mark";
+    public static final String COLUMN_NAME_CAR_MARK = "name_car_mark";
+    public static final String COLUMN_ID_COUNTRY_CAR_MARK = "_id_country_car_mark";
+    public static final String COLUMN_NAME_FOUNDER_CAR_MARK = "name_founder_car_mark";
+    public static final String COLUMN_FOUNDATION_YEAR_CAR_MARK = "foundation_year_car_mark";
 
-    private static final String TABLE_CAR_MODELS = "car_models";
-    private static final String COLUMN_ID_CAR_MODEL = "_id_car_model";
-    private static final String COLUMN_NAME_CAR_MODEL = "name_car_model";
-    private static final String COLUMN_ID_CAR_MODEL_MARK = "_id_car_model_mark";
-    private static final String COLUMN_COST_CAR_MODEL = "cost_car_model";
-    private static final String COLUMN_MODIFICATION_ENGINE_CAR_MODEL = "modification_engine_car_model";
-    private static final String COLUMN_DOORS_NUMBER_CAR_MODEL = "doors_number_car_model";
-    private static final String COLUMN_BODY_TYPE_CAR_MODEL = "body_type_car_model";
-    private static final String COLUMN_SEATS_NUMBER_CAR_MODEL = "seats_number_car_model";
-    private static final String COLUMN_RELEASE_START_CAR_MODEL = "release_start_car_model";
-    private static final String COLUMN_RELEASE_END_CAR_MODEL = "release_end_car_model";
-    private static final String COLUMN_PHOTO_CAR_MODEL = "photo_car_model";
+    public static final String TABLE_CAR_MODELS = "car_models";
+    public static final String COLUMN_ID_CAR_MODEL = "_id_car_model";
+    public static final String COLUMN_NAME_CAR_MODEL = "name_car_model";
+    public static final String COLUMN_ID_CAR_MODEL_MARK = "_id_car_model_mark";
+    public static final String COLUMN_COST_CAR_MODEL = "cost_car_model";
+    public static final String COLUMN_POWER_CAR_MODEL = "power_car_model";
+    public static final String COLUMN_DOORS_NUMBER_CAR_MODEL = "doors_number_car_model";
+    public static final String COLUMN_BODY_TYPE_CAR_MODEL = "body_type_car_model";
+    public static final String COLUMN_SEATS_NUMBER_CAR_MODEL = "seats_number_car_model";
+    public static final String COLUMN_RELEASE_START_CAR_MODEL = "release_start_car_model";
+    public static final String COLUMN_RELEASE_END_CAR_MODEL = "release_end_car_model";
+    public static final String COLUMN_PHOTO_CAR_MODEL = "photo_car_model";
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+    }
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, VERSION);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_NAME_CAR_MODEL + " TEXT, "
                 + COLUMN_ID_CAR_MODEL_MARK + " TEXT, "
                 + COLUMN_COST_CAR_MODEL + " INTEGER, "
-                + COLUMN_MODIFICATION_ENGINE_CAR_MODEL + " TEXT, "
+                + COLUMN_POWER_CAR_MODEL + " TEXT, "
                 + COLUMN_DOORS_NUMBER_CAR_MODEL + " INTEGER, "
                 + COLUMN_BODY_TYPE_CAR_MODEL + " TEXT, "
                 + COLUMN_SEATS_NUMBER_CAR_MODEL + " INTEGER, "
@@ -74,11 +78,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_FOUNDATION_YEAR_CAR_MARK + ") VALUES ('1', 'Ford', '1', 'Henry Ford', '1903');");
 
         sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MODELS + " (" + COLUMN_NAME_CAR_MODEL + ", " +
-                COLUMN_ID_CAR_MODEL_MARK + "," + COLUMN_COST_CAR_MODEL + "," + COLUMN_MODIFICATION_ENGINE_CAR_MODEL + "," +
+                COLUMN_ID_CAR_MODEL_MARK + "," + COLUMN_COST_CAR_MODEL + "," + COLUMN_POWER_CAR_MODEL + "," +
                 COLUMN_DOORS_NUMBER_CAR_MODEL + "," + COLUMN_BODY_TYPE_CAR_MODEL + "," + COLUMN_SEATS_NUMBER_CAR_MODEL + "," +
                 COLUMN_RELEASE_START_CAR_MODEL + "," + COLUMN_RELEASE_END_CAR_MODEL + "," +
                 COLUMN_PHOTO_CAR_MODEL + ") VALUES " +
-                "('Bronco V', '1', '23000', 'Shelby GT350 5.2 V8 (526 Hp)', '2','526', 'coupe','2','2017', '-', 'photo');");
+                "('Bronco V', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'photo')," +
+                "('B', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'photo') ;");
 
     }
 

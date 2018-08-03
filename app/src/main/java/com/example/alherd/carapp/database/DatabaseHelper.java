@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_DOORS_NUMBER_CAR_MODEL + "," + COLUMN_BODY_TYPE_CAR_MODEL + "," + COLUMN_SEATS_NUMBER_CAR_MODEL + "," +
                 COLUMN_RELEASE_START_CAR_MODEL + "," + COLUMN_RELEASE_END_CAR_MODEL + "," +
                 COLUMN_PHOTO_CAR_MODEL + ") VALUES " +
-                "('Bronco V', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'photo')," +
+                "('Bronco V', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'res/drawable/bronvov.jpg')," +
                 "('B', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'photo') ;");
 
     }

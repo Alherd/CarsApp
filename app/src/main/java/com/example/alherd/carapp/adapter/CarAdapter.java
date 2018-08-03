@@ -2,15 +2,20 @@ package com.example.alherd.carapp.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelper;
+
+import java.io.InputStream;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
@@ -38,6 +43,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         }
         String titleModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
         holder.titleModel.setText(titleModel);
+        String photoDoctor = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
+        InputStream is = getClass().getClassLoader().getResourceAsStream(photoDoctor);
+        Bitmap bm = BitmapFactory.decodeStream(is);
+        holder.photoModel.setImageBitmap(bm);
     }
 
     @Override
@@ -47,11 +56,13 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
     public class CarHolder extends RecyclerView.ViewHolder {
         public TextView titleModel;
+        public ImageView photoModel;
 
         public CarHolder(View itemView) {
             super(itemView);
 
             titleModel = itemView.findViewById(R.id.title_model);
+            photoModel = itemView.findViewById(R.id.photo_model);
         }
     }
 

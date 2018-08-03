@@ -14,18 +14,20 @@ import android.widget.TextView;
 
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelper;
+import com.example.alherd.carapp.database.DatabaseHelperMethods;
 
 import java.io.InputStream;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
-
     private Context context;
     private Cursor cursor;
+    private DatabaseHelperMethods databaseHelperMethods;
 
     public CarAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
         cursor.moveToFirst();
+        databaseHelperMethods = new DatabaseHelperMethods(context);
     }
 
     @NonNull
@@ -43,10 +45,19 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         }
         String titleModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
         holder.titleModel.setText(titleModel);
-        String photoDoctor = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
-        InputStream is = getClass().getClassLoader().getResourceAsStream(photoDoctor);
+
+        String photoModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
+        InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
         Bitmap bm = BitmapFactory.decodeStream(is);
         holder.photoModel.setImageBitmap(bm);
+
+        String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
+        holder.markAndCountryModel.setText(databaseHelperMethods.getNameMarkFromId(idMark) +
+                " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
+
+        String costModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL));
+        holder.costModel.setText("$" + costModel);
+
     }
 
     @Override
@@ -57,12 +68,16 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
     public class CarHolder extends RecyclerView.ViewHolder {
         public TextView titleModel;
         public ImageView photoModel;
+        public TextView markAndCountryModel;
+        public TextView costModel;
 
         public CarHolder(View itemView) {
             super(itemView);
 
             titleModel = itemView.findViewById(R.id.title_model);
             photoModel = itemView.findViewById(R.id.photo_model);
+            markAndCountryModel = itemView.findViewById(R.id.mark_country_model);
+            costModel = itemView.findViewById(R.id.cost_model);
         }
     }
 

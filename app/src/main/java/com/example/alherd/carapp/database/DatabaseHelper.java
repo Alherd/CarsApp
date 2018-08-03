@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final int VERSION = 1;
-    public static final String DATABASE_NAME = "clinicBase.db";
+    public static final String DATABASE_NAME = "carBase.db";
 
     public static final String TABLE_MANUFACTURERS = "manufacturers";
     public static final String COLUMN_ID_COUNTRY_MANUFACTURER = "_id_manufacturer";
@@ -16,8 +16,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID_CAR_MARK = "_id_car_mark";
     public static final String COLUMN_NAME_CAR_MARK = "name_car_mark";
     public static final String COLUMN_ID_COUNTRY_CAR_MARK = "_id_country_car_mark";
-    public static final String COLUMN_NAME_FOUNDER_CAR_MARK = "name_founder_car_mark";
-    public static final String COLUMN_FOUNDATION_YEAR_CAR_MARK = "foundation_year_car_mark";
 
     public static final String TABLE_CAR_MODELS = "car_models";
     public static final String COLUMN_ID_CAR_MODEL = "_id_car_model";
@@ -52,9 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + " (" + COLUMN_ID_CAR_MARK
                 + " INTEGER PRIMARY KEY,"
                 + COLUMN_NAME_CAR_MARK + " TEXT, "
-                + COLUMN_ID_COUNTRY_CAR_MARK + " TEXT, "
-                + COLUMN_NAME_FOUNDER_CAR_MARK + " TEXT, "
-                + COLUMN_FOUNDATION_YEAR_CAR_MARK + " TEXT);");
+                + COLUMN_ID_COUNTRY_CAR_MARK + " INTEGER);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_CAR_MODELS
                 + " (" + COLUMN_ID_CAR_MODEL
@@ -74,8 +70,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_NAME_COUNTRY_MANUFACTURER + ") VALUES ('1', 'USA'),('2','Japan'), ('3', 'Germany');");
 
         sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MARKS + " (" + COLUMN_ID_CAR_MARK + ", " +
-                COLUMN_NAME_CAR_MARK + "," + COLUMN_ID_COUNTRY_CAR_MARK + "," + COLUMN_NAME_FOUNDER_CAR_MARK + "," +
-                COLUMN_FOUNDATION_YEAR_CAR_MARK + ") VALUES ('1', 'Ford', '1', 'Henry Ford', '1903');");
+                COLUMN_NAME_CAR_MARK + "," + COLUMN_ID_COUNTRY_CAR_MARK + ") VALUES ('1', 'Ford', '1')," +
+                "('2', 'Toyota', '2')," + "('3', 'Nissan', '2')," + "('4', 'BMW', '3')," + "('5', 'Mercedes-Benz', '3')," +
+                "('6', 'Volkswagen', '3');");
 
         sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MODELS + " (" + COLUMN_NAME_CAR_MODEL + ", " +
                 COLUMN_ID_CAR_MODEL_MARK + "," + COLUMN_COST_CAR_MODEL + "," + COLUMN_POWER_CAR_MODEL + "," +
@@ -83,7 +80,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_RELEASE_START_CAR_MODEL + "," + COLUMN_RELEASE_END_CAR_MODEL + "," +
                 COLUMN_PHOTO_CAR_MODEL + ") VALUES " +
                 "('Bronco V', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'res/drawable/bronvov.jpg')," +
-                "('B', '1', '23000', '526 Hp', '2', 'coupe','2','2017', '-', 'photo') ;");
+                "('Edge II', '1', '23000', '280 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/edge_ford.jpg')," +
+                "('Avalon IV', '2', '23000', '268 Hp', '4', 'Sedan','5','2017', '2018', 'res/drawable/avalon_toyota.jpg')," +
+                "('Duet', '2', '23000', '110 Hp', '5', 'Hatchback','5','2000', '-', 'res/drawable/duet_toyota.jpg')," +
+                "('Matrix II', '2', '23000', '160 Hp', '5', 'Hatchback','5','2008', '-', 'res/drawable/matrix_toyota.jpg')," +
+                "('Almera Classic', '3', '23000', '107 Hp', '4', 'Sedan','5','2006', '2013', 'res/drawable/almera_nissan.jpg')," +
+                "('Maxima VIII', '3', '23000', '300 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/maxima_nissan.jpg')," +
+                "('7er', '4', '23000', '450 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/er_bmw.jpg')," +
+                "('Z3', '4', '23000', '231 Hp', '2', 'Cabriolet','2','2000', '2003', 'res/drawable/z_bmw.jpg')," +
+                "('GLK', '5', '23000', '306 Hp', '5', 'SUV','5','2012', '-', 'res/drawable/glk_mers.jpg')," +
+                "('Viano', '5', '23000', '224 Hp', '5', 'Minivan','6','2010', '-', 'res/drawable/viano_mers.jpg')," +
+                "('Passat Alltrack', '6', '23000', '220 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/passat_volks.jpg');");
 
     }
 

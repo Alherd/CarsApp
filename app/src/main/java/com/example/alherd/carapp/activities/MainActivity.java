@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SQLiteDatabase sqLiteDatabase;
     private CarAdapter carAdapter;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +28,22 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_cars);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sqLiteDatabase = databaseHelper.getWritableDatabase();
-        Cursor cursor = getAllItems();
+        cursor = getAllItems();
         carAdapter = new CarAdapter(this, cursor);
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
+
     }
 
     private Cursor getAllItems() {
-        return sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_CAR_MODELS, null);
+        //return sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_CAR_MODELS, null);
+        return sqLiteDatabase.query(DatabaseHelper.TABLE_CAR_MODELS,
+                null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cursor.close();
     }
 }

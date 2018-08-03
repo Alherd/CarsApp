@@ -2,7 +2,6 @@ package com.example.alherd.carapp.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -41,48 +40,45 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CarHolder holder, int position) {
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        SQLiteDatabase sqLiteDatabase = databaseHelper.getReadableDatabase();
-        Cursor cursor1 = sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_CAR_MODELS, null);
-        cursor1.moveToFirst();
-        if (!cursor1.move(position)) {
+        cursor.moveToFirst();
+        if (!cursor.move(position)) {
             return;
         }
 
-        String titleModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
+        String titleModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
         holder.titleModel.setText(titleModel);
 
-        String photoModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
+        String photoModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
         InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
         Bitmap bm = BitmapFactory.decodeStream(is);
         holder.photoModel.setImageBitmap(bm);
 
-        String idMark = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
+        String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
         holder.markAndCountryModel.setText(databaseHelperMethods.getNameMarkFromId(idMark) +
                 " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
 
-        String costModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL));
+        String costModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL));
         holder.costModel.setText("$" + costModel);
 
-        String powerModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_POWER_CAR_MODEL));
+        String powerModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_POWER_CAR_MODEL));
         holder.powerModel.setText(powerModel);
 
-        String doorsNumberModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_DOORS_NUMBER_CAR_MODEL));
+        String doorsNumberModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DOORS_NUMBER_CAR_MODEL));
         holder.doorsNumberModel.setText(doorsNumberModel);
 
-        String bodyTypeModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_BODY_TYPE_CAR_MODEL));
+        String bodyTypeModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BODY_TYPE_CAR_MODEL));
         holder.bodyTypeModel.setText(bodyTypeModel);
 
-        String seatsNumberModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_SEATS_NUMBER_CAR_MODEL));
+        String seatsNumberModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_SEATS_NUMBER_CAR_MODEL));
         holder.seatsNumberModel.setText(seatsNumberModel);
 
-        String startReleaseModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_START_CAR_MODEL));
+        String startReleaseModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_START_CAR_MODEL));
         holder.startReleaseModel.setText(startReleaseModel);
 
-        String endReleaseModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
+        String endReleaseModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
         holder.endReleaseModel.setText(endReleaseModel);
 
-        cursor1.close();
+
     }
 
     @Override
@@ -115,16 +111,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
             seatsNumberModel = itemView.findViewById(R.id.seats_number_model);
             startReleaseModel = itemView.findViewById(R.id.start_release_model);
             endReleaseModel = itemView.findViewById(R.id.end_release_model);
-        }
-    }
-
-    private void swapCursor(Cursor newCursor) {
-        if (cursor != null) {
-            cursor.close();
-        }
-        cursor = newCursor;
-        if (newCursor != null) {
-            notifyDataSetChanged();
         }
     }
 }

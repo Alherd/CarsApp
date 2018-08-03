@@ -63,8 +63,26 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
         String costModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL));
         holder.costModel.setText("$" + costModel);
-        cursor1.close();
 
+        String powerModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_POWER_CAR_MODEL));
+        holder.powerModel.setText(powerModel);
+
+        String doorsNumberModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_DOORS_NUMBER_CAR_MODEL));
+        holder.doorsNumberModel.setText(doorsNumberModel);
+
+        String bodyTypeModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_BODY_TYPE_CAR_MODEL));
+        holder.bodyTypeModel.setText(bodyTypeModel);
+
+        String seatsNumberModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_SEATS_NUMBER_CAR_MODEL));
+        holder.seatsNumberModel.setText(seatsNumberModel);
+
+        String startReleaseModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_START_CAR_MODEL));
+        holder.startReleaseModel.setText(startReleaseModel);
+
+        String endReleaseModel = cursor1.getString(cursor1.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
+        holder.endReleaseModel.setText(endReleaseModel);
+
+        cursor1.close();
     }
 
     @Override
@@ -77,6 +95,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         public ImageView photoModel;
         public TextView markAndCountryModel;
         public TextView costModel;
+        public TextView powerModel;
+        public TextView doorsNumberModel;
+        public TextView bodyTypeModel;
+        public TextView seatsNumberModel;
+        public TextView startReleaseModel;
+        public TextView endReleaseModel;
 
         public CarHolder(View itemView) {
             super(itemView);
@@ -85,6 +109,12 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
             photoModel = itemView.findViewById(R.id.photo_model);
             markAndCountryModel = itemView.findViewById(R.id.mark_country_model);
             costModel = itemView.findViewById(R.id.cost_model);
+            powerModel = itemView.findViewById(R.id.power_model);
+            doorsNumberModel = itemView.findViewById(R.id.doors_number_model);
+            bodyTypeModel = itemView.findViewById(R.id.body_type_model);
+            seatsNumberModel = itemView.findViewById(R.id.seats_number_model);
+            startReleaseModel = itemView.findViewById(R.id.start_release_model);
+            endReleaseModel = itemView.findViewById(R.id.end_release_model);
         }
     }
 

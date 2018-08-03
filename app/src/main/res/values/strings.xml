@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Cars</string>
+    <string name="power">Power: </string>
+    <string name="number_of_doors">Number of doors: </string>
+    <string name="body_type">Body type: </string>
+    <string name="number_of_seats">Number of seats:</string>
+    <string name="end_release">End release:</string>
+    <string name="start_release">Start release:</string>
 </resources>

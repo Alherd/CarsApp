@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MARKS + " (" + COLUMN_ID_CAR_MARK + ", " +
                 COLUMN_NAME_CAR_MARK + "," + COLUMN_ID_COUNTRY_CAR_MARK + ") VALUES ('1', 'Ford', '1')," +
-                "('2', 'Toyota', '2')," + "('3', 'Nissan', '2')," + "('4', 'BMW', '3')," + "('5', 'Mercedes-Benz', '3')," +
+                "('2', 'Toyota', '2'),('3', 'Nissan', '2'),('4', 'BMW', '3'),('5', 'Mercedes-Benz', '3')," +
                 "('6', 'Volkswagen', '3');");
 
         sqLiteDatabase.execSQL("INSERT INTO " + TABLE_CAR_MODELS + " (" + COLUMN_NAME_CAR_MODEL + ", " +
@@ -91,7 +91,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "('GLK', '5', '23000', '306 Hp', '5', 'SUV','5','2012', '-', 'res/drawable/glk_mers.jpg')," +
                 "('Viano', '5', '23000', '224 Hp', '5', 'Minivan','6','2010', '-', 'res/drawable/viano_mers.jpg')," +
                 "('Passat Alltrack', '6', '23000', '220 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/passat_volks.jpg');");
-
     }
 
     @Override

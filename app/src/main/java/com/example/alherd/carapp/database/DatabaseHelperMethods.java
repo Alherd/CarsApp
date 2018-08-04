@@ -31,7 +31,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return nameP;
     }
 
-    public void insertCarModel(String title) {
+    public void insertCarModel(String title, String uri) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_CAR_MODEL, title);
@@ -43,7 +43,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         contentValues.put(COLUMN_SEATS_NUMBER_CAR_MODEL, "1");
         contentValues.put(COLUMN_RELEASE_START_CAR_MODEL, "1");
         contentValues.put(COLUMN_RELEASE_END_CAR_MODEL, "a");
-        contentValues.put(COLUMN_PHOTO_CAR_MODEL, "a");
+        contentValues.put(COLUMN_PHOTO_CAR_MODEL, uri);
         db.insert(TABLE_CAR_MODELS, null, contentValues);
     }
 }

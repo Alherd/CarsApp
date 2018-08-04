@@ -1,11 +1,18 @@
 package com.example.alherd.carapp.adapter;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +22,9 @@ import android.widget.TextView;
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelper;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
+import com.example.alherd.carapp.utils.StringUtils;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
@@ -49,10 +58,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         holder.titleModel.setText(titleModel);
 
         String photoModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
-        InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
-        Bitmap bm = BitmapFactory.decodeStream(is);
-        holder.photoModel.setImageBitmap(bm);
+        if (StringUtils.foo(photoModel, "jpg")) {
+            InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
+            Bitmap bm = BitmapFactory.decodeStream(is);
+            holder.photoModel.setImageBitmap(bm);
+        } else {
 
+            Bitmap bm = BitmapFactory.decodeStream(a(photoModel));
+            holder.photoModel.setImageBitmap(bm);
+        }
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
         holder.markAndCountryModel.setText(databaseHelperMethods.getNameMarkFromId(idMark) +
                 " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
@@ -113,4 +127,18 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
             endReleaseModel = itemView.findViewById(R.id.end_release_model);
         }
     }
+
+    private InputStream a(String photoModel) {
+        InputStream is = null;
+        try {
+            is = context
+                    .getContentResolver()
+                    .openInputStream(Uri.parse(photoModel));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return is;
+    }
+
 }

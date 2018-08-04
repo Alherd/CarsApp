@@ -8,4 +8,5 @@
     <string name="start_release">Start release:</string>
     <string name="new_car">New car</string>
     <string name="save_button">Save</string>
+    <string name="describe_new_car">Describe new car</string>
 </resources>

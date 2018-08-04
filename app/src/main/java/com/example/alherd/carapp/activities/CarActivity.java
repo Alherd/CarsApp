@@ -20,7 +20,7 @@ import com.example.alherd.carapp.utils.BitmapUtils;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class CarActivity extends AppCompatActivity {
+public final class CarActivity extends AppCompatActivity {
     private static final int REQUEST_PHOTO = 1;
     private EditText editText;
     private Button saveButton;

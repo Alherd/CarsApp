@@ -15,7 +15,7 @@ import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.database.DatabaseHelper;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase;
     private CarAdapter carAdapter;
     private Cursor cursor;

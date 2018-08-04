@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +64,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
             Bitmap bm = BitmapFactory.decodeStream(is);
             holder.photoModel.setImageBitmap(bm);
         } else {
-
-            Bitmap bm = BitmapFactory.decodeStream(a(photoModel));
+            Bitmap bm = convertToBitmap(photoModel);
             holder.photoModel.setImageBitmap(bm);
         }
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
@@ -141,4 +141,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         return is;
     }
 
+    public Bitmap convertToBitmap(String base64String) {
+        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+        Bitmap bitmapResult = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return bitmapResult;
+    }
 }

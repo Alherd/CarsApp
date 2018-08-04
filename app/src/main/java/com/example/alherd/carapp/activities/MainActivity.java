@@ -21,7 +21,6 @@ import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.database.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
-
     private SQLiteDatabase sqLiteDatabase;
     private CarAdapter carAdapter;
     private Cursor cursor;

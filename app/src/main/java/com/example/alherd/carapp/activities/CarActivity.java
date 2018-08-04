@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -33,6 +35,7 @@ public class CarActivity extends AppCompatActivity implements ActivityCompat.OnR
     private File mPhotoFile;
     private ImageView mPhotoView;
     private Uri selectedImage;
+    private Bitmap selectedImages;
 
     private static final int REQUEST_PHOTO = 2;
 
@@ -58,7 +61,7 @@ public class CarActivity extends AppCompatActivity implements ActivityCompat.OnR
             public void onClick(View view) {
                 String title = editText.getText().toString();
 
-                databaseHelperMethods.insertCarModel(title, selectedImage.toString());
+                databaseHelperMethods.insertCarModel(title, convertToBase64(selectedImages));
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
@@ -89,7 +92,7 @@ public class CarActivity extends AppCompatActivity implements ActivityCompat.OnR
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            final Bitmap selectedImages = BitmapFactory.decodeStream(imageStream);
+            selectedImages = BitmapFactory.decodeStream(imageStream);
             mPhotoView.setImageBitmap(selectedImages);
         }
     }
@@ -119,5 +122,12 @@ public class CarActivity extends AppCompatActivity implements ActivityCompat.OnR
             Log.v("ddddd", "Permission: " + permissions[0] + "was " + grantResults[0]);
             //resume tasks needing this permission
         }
+    }
+
+    public String convertToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        byte[] byteArray = os.toByteArray();
+        return Base64.encodeToString(byteArray, 0);
     }
 }

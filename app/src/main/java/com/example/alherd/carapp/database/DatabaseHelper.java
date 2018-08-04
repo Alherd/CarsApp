@@ -43,12 +43,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_MANUFACTURERS
                 + " (" + COLUMN_ID_COUNTRY_MANUFACTURER
-                + " INTEGER PRIMARY KEY,"
+                + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NAME_COUNTRY_MANUFACTURER + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_CAR_MARKS
                 + " (" + COLUMN_ID_CAR_MARK
-                + " INTEGER PRIMARY KEY,"
+                + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_NAME_CAR_MARK + " TEXT, "
                 + COLUMN_ID_COUNTRY_CAR_MARK + " INTEGER);");
 

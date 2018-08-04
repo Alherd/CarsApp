@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelper;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
+import com.example.alherd.carapp.utils.BitmapUtils;
 import com.example.alherd.carapp.utils.StringUtils;
 
 import java.io.FileNotFoundException;
@@ -64,7 +65,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
             Bitmap bm = BitmapFactory.decodeStream(is);
             holder.photoModel.setImageBitmap(bm);
         } else {
-            Bitmap bm = convertToBitmap(photoModel);
+            Bitmap bm = BitmapUtils.convertToBitmap(photoModel);
             holder.photoModel.setImageBitmap(bm);
         }
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
@@ -139,11 +140,5 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         }
 
         return is;
-    }
-
-    public Bitmap convertToBitmap(String base64String) {
-        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-        Bitmap bitmapResult = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return bitmapResult;
     }
 }

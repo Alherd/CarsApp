@@ -79,17 +79,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_DOORS_NUMBER_CAR_MODEL + "," + COLUMN_BODY_TYPE_CAR_MODEL + "," + COLUMN_SEATS_NUMBER_CAR_MODEL + "," +
                 COLUMN_RELEASE_START_CAR_MODEL + "," + COLUMN_RELEASE_END_CAR_MODEL + "," +
                 COLUMN_PHOTO_CAR_MODEL + ") VALUES " +
-//                "('Bronco V', '1', '23000', '526 Hp', '2', 'Coupe','2','2017', '-', 'res/drawable/bronvov.jpg')," +
-//                "('Edge II', '1', '28000', '280 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/edge_ford.jpg')," +
-//                "('Avalon IV', '2', '40000', '268 Hp', '4', 'Sedan','5','2017', '2018', 'res/drawable/avalon_toyota.jpg')," +
-//                "('Duet', '2', '17000', '110 Hp', '5', 'Hatchback','5','2000', '-', 'res/drawable/duet_toyota.jpg')," +
-//                "('Matrix II', '2', '20000', '160 Hp', '5', 'Hatchback','5','2008', '-', 'res/drawable/matrix_toyota.jpg')," +
-//                "('Almera Classic', '3', '18000', '107 Hp', '4', 'Sedan','5','2006', '2013', 'res/drawable/almera_nissan.jpg')," +
-//                "('Maxima VIII', '3', '21000', '300 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/maxima_nissan.jpg')," +
-//                "('7er', '4', '26000', '450 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/er_bmw.jpg')," +
-//                "('Z3', '4', '8000', '231 Hp', '2', 'Cabriolet','2','2000', '2003', 'res/drawable/z_bmw.jpg')," +
-//                "('GLK', '5', '24000', '306 Hp', '5', 'SUV','5','2012', '-', 'res/drawable/glk_mers.jpg')," +
-//                "('Viano', '5', '15000', '224 Hp', '5', 'Minivan','6','2010', '-', 'res/drawable/viano_mers.jpg')," +
+                "('Bronco V', '1', '23000', '526 Hp', '2', 'Coupe','2','2017', '-', 'res/drawable/bronvov.jpg')," +
+                "('Edge II', '1', '28000', '280 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/edge_ford.jpg')," +
+                "('Avalon IV', '2', '40000', '268 Hp', '4', 'Sedan','5','2017', '2018', 'res/drawable/avalon_toyota.jpg')," +
+                "('Duet', '2', '17000', '110 Hp', '5', 'Hatchback','5','2000', '-', 'res/drawable/duet_toyota.jpg')," +
+                "('Matrix II', '2', '20000', '160 Hp', '5', 'Hatchback','5','2008', '-', 'res/drawable/matrix_toyota.jpg')," +
+                "('Almera Classic', '3', '18000', '107 Hp', '4', 'Sedan','5','2006', '2013', 'res/drawable/almera_nissan.jpg')," +
+                "('Maxima VIII', '3', '21000', '300 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/maxima_nissan.jpg')," +
+                "('7er', '4', '26000', '450 Hp', '4', 'Sedan','5','2015', '-', 'res/drawable/er_bmw.jpg')," +
+                "('Z3', '4', '8000', '231 Hp', '2', 'Cabriolet','2','2000', '2003', 'res/drawable/z_bmw.jpg')," +
+                "('GLK', '5', '24000', '306 Hp', '5', 'SUV','5','2012', '-', 'res/drawable/glk_mers.jpg')," +
+                "('Viano', '5', '15000', '224 Hp', '5', 'Minivan','6','2010', '-', 'res/drawable/viano_mers.jpg')," +
                 "('Passat Alltrack', '6', '22000', '220 Hp', '5', 'SUV','5','2015', '-', 'res/drawable/passat_volks.jpg');");
     }
 

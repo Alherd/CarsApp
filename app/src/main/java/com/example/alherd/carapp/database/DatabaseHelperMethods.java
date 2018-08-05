@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
+
+import com.example.alherd.carapp.model.Car;
 
 public final class DatabaseHelperMethods extends DatabaseHelper {
     public DatabaseHelperMethods(Context context) {
@@ -31,19 +34,20 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return nameP;
     }
 
-    public void insertCarModel(String title, String uri) {
+    public void insertCarModel(Car car, Context context) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NAME_CAR_MODEL, title);
-        contentValues.put(COLUMN_ID_CAR_MODEL_MARK, "2");
-        contentValues.put(COLUMN_COST_CAR_MODEL, "1");
-        contentValues.put(COLUMN_POWER_CAR_MODEL, "a");
-        contentValues.put(COLUMN_DOORS_NUMBER_CAR_MODEL, "1");
-        contentValues.put(COLUMN_BODY_TYPE_CAR_MODEL, "a");
-        contentValues.put(COLUMN_SEATS_NUMBER_CAR_MODEL, "1");
-        contentValues.put(COLUMN_RELEASE_START_CAR_MODEL, "1");
-        contentValues.put(COLUMN_RELEASE_END_CAR_MODEL, "a");
-        contentValues.put(COLUMN_PHOTO_CAR_MODEL, uri);
+        contentValues.put(COLUMN_NAME_CAR_MODEL, car.getTitle());
+        contentValues.put(COLUMN_ID_CAR_MODEL_MARK, car.getMark());
+        contentValues.put(COLUMN_COST_CAR_MODEL, car.getCost());
+        contentValues.put(COLUMN_POWER_CAR_MODEL, car.getPower());
+        contentValues.put(COLUMN_DOORS_NUMBER_CAR_MODEL, car.getDoorsNumber());
+        contentValues.put(COLUMN_BODY_TYPE_CAR_MODEL, car.getBodyType());
+        contentValues.put(COLUMN_SEATS_NUMBER_CAR_MODEL, car.getSeatsNumber());
+        contentValues.put(COLUMN_RELEASE_START_CAR_MODEL, car.getStartRelease());
+        contentValues.put(COLUMN_RELEASE_END_CAR_MODEL, car.getEndRelease());
+        contentValues.put(COLUMN_PHOTO_CAR_MODEL, car.getPhoto());
         db.insert(TABLE_CAR_MODELS, null, contentValues);
+        Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
     }
 }

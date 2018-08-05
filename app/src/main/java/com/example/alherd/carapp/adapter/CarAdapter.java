@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelper;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
-import com.example.alherd.carapp.utils.BitmapUtils;
 import com.example.alherd.carapp.utils.StringUtils;
 
 import java.io.FileNotFoundException;
@@ -53,14 +52,17 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         holder.titleModel.setText(titleModel);
 
         String photoModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
-        if (StringUtils.foo(photoModel, "jpg")) {
-            InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
-            Bitmap bm = BitmapFactory.decodeStream(is);
-            holder.photoModel.setImageBitmap(bm);
-        } else {
-            Bitmap bm = BitmapUtils.convertToBitmap(photoModel);
-            holder.photoModel.setImageBitmap(bm);
+        if (photoModel != null) {
+            if (StringUtils.foo(photoModel, "jpg")) {
+                InputStream is = getClass().getClassLoader().getResourceAsStream(photoModel);
+                Bitmap bm = BitmapFactory.decodeStream(is);
+                holder.photoModel.setImageBitmap(bm);
+            } else {
+                Bitmap bm = BitmapFactory.decodeStream(getInputStream(photoModel));
+                holder.photoModel.setImageBitmap(bm);
+            }
         }
+
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
         holder.markAndCountryModel.setText(databaseHelperMethods.getNameMarkFromId(idMark) +
                 " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
@@ -85,8 +87,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
         String endReleaseModel = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
         holder.endReleaseModel.setText(endReleaseModel);
-
-
     }
 
     @Override
@@ -108,7 +108,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
 
         public CarHolder(View itemView) {
             super(itemView);
-
             titleModel = itemView.findViewById(R.id.title_model);
             photoModel = itemView.findViewById(R.id.photo_model);
             markAndCountryModel = itemView.findViewById(R.id.mark_country_model);
@@ -122,7 +121,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         }
     }
 
-    private InputStream a(String photoModel) {
+    private InputStream getInputStream(String photoModel) {
         InputStream is = null;
         try {
             is = context
@@ -131,7 +130,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarHolder> {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return is;
     }
 }

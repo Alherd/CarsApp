@@ -1,8 +1,11 @@
 package com.example.alherd.carapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.UUID;
 
-public class Car {
+public class Car implements Parcelable {
     private UUID mId;
     private String title;
     private String mark;
@@ -21,6 +24,19 @@ public class Car {
 
     public Car(UUID id) {
         mId = id;
+    }
+
+    protected Car(Parcel in) {
+        title = in.readString();
+        mark = in.readString();
+        cost = in.readInt();
+        power = in.readString();
+        doorsNumber = in.readString();
+        bodyType = in.readString();
+        seatsNumber = in.readString();
+        startRelease = in.readString();
+        endRelease = in.readString();
+        photo = in.readString();
     }
 
     public UUID getId() {
@@ -110,4 +126,36 @@ public class Car {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeString(mark);
+        parcel.writeInt(cost);
+        parcel.writeString(power);
+        parcel.writeString(doorsNumber);
+        parcel.writeString(bodyType);
+        parcel.writeString(seatsNumber);
+        parcel.writeString(startRelease);
+        parcel.writeString(endRelease);
+        parcel.writeString(photo);
+    }
+
+    public static final Parcelable.Creator<Car> CREATOR = new Parcelable.Creator<Car>() {
+
+        @Override
+        public Car createFromParcel(Parcel source) {
+            return new Car(source);
+        }
+
+        @Override
+        public Car[] newArray(int size) {
+            return new Car[size];
+        }
+    };
 }

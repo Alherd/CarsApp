@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -17,6 +16,8 @@ import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.adapter.RecyclerTouchListener;
 import com.example.alherd.carapp.database.DatabaseHelper;
+import com.example.alherd.carapp.database.DatabaseHelperMethods;
+import com.example.alherd.carapp.model.Car;
 import com.example.alherd.carapp.utils.ToastShowing;
 
 public final class MainActivity extends AppCompatActivity {
@@ -24,19 +25,21 @@ public final class MainActivity extends AppCompatActivity {
     private CarAdapter carAdapter;
     private Cursor cursor;
     private RecyclerView recyclerView;
+    private DatabaseHelperMethods databaseHelperMethods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.recycler_view_cars);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sqLiteDatabase = databaseHelper.getWritableDatabase();
+        databaseHelperMethods = new DatabaseHelperMethods(this);
         cursor = getAllItems();
         carAdapter = new CarAdapter(this, cursor);
-      //  cursor.close();
+        //  cursor.close();
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
 
@@ -48,6 +51,10 @@ public final class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
+                Car car = databaseHelperMethods.createCarFromPosition(position);
+                Intent intent = new Intent(MainActivity.this, CarActivity.class);
+                intent.putExtra("Car", car);
+                startActivityForResult(intent, 2);
             }
         }));
 
@@ -83,7 +90,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
         carAdapter = new CarAdapter(this, getAllItems());
-     //   getAllItems().close();
+        //   getAllItems().close();
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Insert car successful", Toast.LENGTH_SHORT).show();

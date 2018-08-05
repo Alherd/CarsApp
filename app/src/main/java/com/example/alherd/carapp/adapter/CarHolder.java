@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,6 +68,11 @@ public class CarHolder extends RecyclerView.ViewHolder {
                 InputStream is = getClass().getClassLoader().getResourceAsStream(photoModelString);
                 Bitmap bm = BitmapFactory.decodeStream(is);
                 photoModel.setImageBitmap(bm);
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 //     setFibonacciNumberOnUiThread(photoModel, bm);
 
             } else {

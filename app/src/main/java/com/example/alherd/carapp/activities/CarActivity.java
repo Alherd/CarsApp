@@ -23,6 +23,7 @@ import com.example.alherd.carapp.model.Car;
 import com.example.alherd.carapp.utils.ToastShowing;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public final class CarActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -65,6 +66,28 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
         captureImage.setAction(Intent.ACTION_GET_CONTENT);
 
         mPhotoView = (ImageView) findViewById(R.id.crime_photo);
+
+        Car car1 = (Car) getIntent().getParcelableExtra("Car");
+        if (car1 != null) {
+            titleEditText.setText(car1.getTitle());
+            markEditText.setText(databaseHelperMethods.getNameMarkFromId(car1.getMark()));
+            costEditText.setText(Integer.toString(car1.getCost()));
+            powerEditText.setText(car1.getPower());
+            doorsNumberEditText.setText(car1.getDoorsNumber());
+            bodyTypeEditText.setText(car1.getBodyType());
+            seatsNumberEditText.setText(car1.getSeatsNumber());
+            startReleaseEditText.setText(car1.getStartRelease());
+            endReleaseEditText.setText(car1.getEndRelease());
+
+            InputStream is = getClass().getClassLoader().getResourceAsStream(car1.getPhoto());
+            Bitmap bm = BitmapFactory.decodeStream(is);
+            mPhotoView.setImageBitmap(bm);
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

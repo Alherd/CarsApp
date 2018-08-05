@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.alherd.carapp.activities.MainActivity;
 import com.example.alherd.carapp.model.Car;
+import com.example.alherd.carapp.utils.ToastShowing;
 
 public final class DatabaseHelperMethods extends DatabaseHelper {
     public DatabaseHelperMethods(Context context) {
@@ -96,5 +98,41 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         String nameP = b.getString(b.getColumnIndex(COLUMN_ID_COUNTRY_MANUFACTURER));
         b.close();
         return Integer.parseInt(nameP);
+    }
+
+    public Car createCarFromPosition(int position) {
+        Car car = new Car();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_CAR_MODELS,
+                null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
+        cursor.moveToFirst();
+        if (!cursor.move(position)) {
+            return car;
+        }
+
+        String titleModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
+        String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
+        int costModelString = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL)));
+        String powerModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_POWER_CAR_MODEL));
+        String doorsNumberModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DOORS_NUMBER_CAR_MODEL));
+        String bodyTypeModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_BODY_TYPE_CAR_MODEL));
+        String seatsNumberModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_SEATS_NUMBER_CAR_MODEL));
+        String startReleaseModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_START_CAR_MODEL));
+        String endReleaseModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
+        String photoModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
+
+        car.setTitle(titleModelString);
+        car.setMark(idMark);
+        car.setCost(costModelString);
+        car.setPower(powerModelString);
+        car.setDoorsNumber(doorsNumberModelString);
+        car.setBodyType(bodyTypeModelString);
+        car.setSeatsNumber(seatsNumberModelString);
+        car.setStartRelease(startReleaseModelString);
+        car.setEndRelease(endReleaseModelString);
+        car.setPhoto(photoModelString);
+
+        cursor.close();
+        return car;
     }
 }

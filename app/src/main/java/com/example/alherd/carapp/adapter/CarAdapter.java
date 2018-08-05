@@ -9,18 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alherd.carapp.R;
-import com.example.alherd.carapp.database.DatabaseHelperMethods;
 
 public class CarAdapter extends RecyclerView.Adapter<CarHolder> {
     private Context context;
     private Cursor cursor;
-    private DatabaseHelperMethods databaseHelperMethods;
 
     public CarAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
-
-        databaseHelperMethods = new DatabaseHelperMethods(context);
     }
 
     @NonNull

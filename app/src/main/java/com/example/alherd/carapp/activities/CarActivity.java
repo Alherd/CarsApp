@@ -11,16 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.alherd.carapp.R;
-import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.model.Car;
 import com.example.alherd.carapp.utils.ToastShowing;
@@ -74,9 +71,11 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             public void onClick(View view) {
                 String mark = markEditText.getText().toString();
                 if (titleEditText.getText().toString().equals("")) {
-                    ToastShowing.postToastMessage(CarActivity.this, "Please, input title of car");
+                    ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_title));
                 } else if (markEditText.getText().toString().equals("")) {
-                    ToastShowing.postToastMessage(CarActivity.this, "Please, input mark of car");
+                    ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_mark));
+                } else if (costEditText.getText().toString().equals("")) {
+                    ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_cost));
                 } else {
                     if (!databaseHelperMethods.isMarkExist(markEditText.getText().toString())) {
                         Intent intent = new Intent(CarActivity.this, CountryActivity.class);
@@ -86,9 +85,9 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                         car.setMark(String.valueOf(databaseHelperMethods.getIdMarkFromName(mark)));
                         car.setCost(Integer.parseInt(costEditText.getText().toString()));
                         car.setPower(powerEditText.getText().toString());
-                        car.setDoorsNumber(Integer.parseInt(doorsNumberEditText.getText().toString()));
+                        car.setDoorsNumber(doorsNumberEditText.getText().toString());
                         car.setBodyType(bodyTypeEditText.getText().toString());
-                        car.setSeatsNumber(Integer.parseInt(seatsNumberEditText.getText().toString()));
+                        car.setSeatsNumber(seatsNumberEditText.getText().toString());
                         car.setStartRelease(startReleaseEditText.getText().toString());
                         car.setEndRelease(endReleaseEditText.getText().toString());
 
@@ -132,7 +131,6 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
         if (requestCode == REQUEST_COUNTRY) {
             int idCountry = data.getIntExtra("ID_COUNTRY", 0);
             databaseHelperMethods.insertMark(markEditText.getText().toString(), idCountry);
-//            car.setMark(databaseHelperMethods.getIdMarkFromName(markEditText.getText().toString()));
         }
     }
 

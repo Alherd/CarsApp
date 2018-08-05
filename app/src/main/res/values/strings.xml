@@ -9,4 +9,7 @@
     <string name="new_car">New car</string>
     <string name="save_button">Save</string>
     <string name="describe_new_car">Describe new car</string>
+    <string name="input_title">Please, input title of car</string>
+    <string name="input_mark">Please, input mark of car</string>
+    <string name="input_cost">Please, input cost of car</string>
 </resources>

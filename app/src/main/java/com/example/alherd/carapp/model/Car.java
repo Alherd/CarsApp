@@ -8,9 +8,9 @@ public class Car {
     private String mark;
     private int cost;
     private String power;
-    private int doorsNumber;
+    private String doorsNumber;
     private String bodyType;
-    private int seatsNumber;
+    private String seatsNumber;
     private String startRelease;
     private String endRelease;
     private String photo;
@@ -63,11 +63,11 @@ public class Car {
         this.power = power;
     }
 
-    public int getDoorsNumber() {
+    public String getDoorsNumber() {
         return doorsNumber;
     }
 
-    public void setDoorsNumber(int doorsNumber) {
+    public void setDoorsNumber(String doorsNumber) {
         this.doorsNumber = doorsNumber;
     }
 
@@ -79,11 +79,11 @@ public class Car {
         this.bodyType = bodyType;
     }
 
-    public int getSeatsNumber() {
+    public String getSeatsNumber() {
         return seatsNumber;
     }
 
-    public void setSeatsNumber(int seatsNumber) {
+    public void setSeatsNumber(String seatsNumber) {
         this.seatsNumber = seatsNumber;
     }
 

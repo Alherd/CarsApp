@@ -34,7 +34,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return nameP;
     }
 
-    public void insertCarModel(Car car, Context context) {
+    public void insertCarModel(Car car) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_CAR_MODEL, car.getTitle());
@@ -47,7 +47,51 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         contentValues.put(COLUMN_RELEASE_START_CAR_MODEL, car.getStartRelease());
         contentValues.put(COLUMN_RELEASE_END_CAR_MODEL, car.getEndRelease());
         contentValues.put(COLUMN_PHOTO_CAR_MODEL, car.getPhoto());
+
         db.insert(TABLE_CAR_MODELS, null, contentValues);
-        Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean isMarkExist(String mark) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_CAR_MARKS + " where " + COLUMN_NAME_CAR_MARK + " = '" + mark + "';", null);
+        int a = cursor.getCount();
+        cursor.close();
+        return a != 0;
+    }
+
+    public void insertMark(String mark, int idCountry) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.COLUMN_NAME_CAR_MARK, mark);
+        contentValues.put(DatabaseHelper.COLUMN_ID_COUNTRY_CAR_MARK, idCountry);
+
+        db.insert(TABLE_CAR_MARKS, null, contentValues);
+    }
+
+    public int getIdMarkFromName(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor b = db.rawQuery("select * from " + TABLE_CAR_MARKS +
+                " where " + COLUMN_NAME_CAR_MARK + " = '" + name + "';", null);
+        b.moveToFirst();
+        String nameP = b.getString(b.getColumnIndex(COLUMN_ID_CAR_MARK));
+        b.close();
+        return Integer.parseInt(nameP);
+    }
+
+    public void insertCountry(String nameCountry) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.COLUMN_NAME_COUNTRY_MANUFACTURER, nameCountry);
+        db.insert(TABLE_MANUFACTURERS, null, contentValues);
+    }
+
+    public int getIdCountryFromName(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor b = db.rawQuery("select * from " + TABLE_MANUFACTURERS +
+                " where " + COLUMN_NAME_COUNTRY_MANUFACTURER + " = '" + name + "';", null);
+        b.moveToFirst();
+        String nameP = b.getString(b.getColumnIndex(COLUMN_ID_COUNTRY_MANUFACTURER));
+        b.close();
+        return Integer.parseInt(nameP);
     }
 }

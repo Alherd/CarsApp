@@ -17,17 +17,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.alherd.carapp.R;
+import com.example.alherd.carapp.adapter.CarAdapter;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.model.Car;
-import com.example.alherd.carapp.utils.BitmapConverter;
+import com.example.alherd.carapp.utils.ToastShowing;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public final class CarActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private static final int REQUEST_PHOTO = 1;
+    private static final int REQUEST_COUNTRY = 2;
     private EditText titleEditText;
     private EditText markEditText;
     private EditText costEditText;
@@ -69,20 +72,32 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                car.setTitle(titleEditText.getText().toString());
-                car.setMark(markEditText.getText().toString());
-                car.setCost(Integer.parseInt(costEditText.getText().toString()));
-                car.setPower(powerEditText.getText().toString());
-                car.setDoorsNumber(Integer.parseInt(doorsNumberEditText.getText().toString()));
-                car.setBodyType(bodyTypeEditText.getText().toString());
-                car.setSeatsNumber(Integer.parseInt(seatsNumberEditText.getText().toString()));
-                car.setStartRelease(startReleaseEditText.getText().toString());
-                car.setEndRelease(endReleaseEditText.getText().toString());
+                String mark = markEditText.getText().toString();
+                if (titleEditText.getText().toString().equals("")) {
+                    ToastShowing.postToastMessage(CarActivity.this, "Please, input title of car");
+                } else if (markEditText.getText().toString().equals("")) {
+                    ToastShowing.postToastMessage(CarActivity.this, "Please, input mark of car");
+                } else {
+                    if (!databaseHelperMethods.isMarkExist(markEditText.getText().toString())) {
+                        Intent intent = new Intent(CarActivity.this, CountryActivity.class);
+                        startActivityForResult(intent, REQUEST_COUNTRY);
+                    } else {
+                        car.setTitle(titleEditText.getText().toString());
+                        car.setMark(String.valueOf(databaseHelperMethods.getIdMarkFromName(mark)));
+                        car.setCost(Integer.parseInt(costEditText.getText().toString()));
+                        car.setPower(powerEditText.getText().toString());
+                        car.setDoorsNumber(Integer.parseInt(doorsNumberEditText.getText().toString()));
+                        car.setBodyType(bodyTypeEditText.getText().toString());
+                        car.setSeatsNumber(Integer.parseInt(seatsNumberEditText.getText().toString()));
+                        car.setStartRelease(startReleaseEditText.getText().toString());
+                        car.setEndRelease(endReleaseEditText.getText().toString());
 
-                databaseHelperMethods.insertCarModel(car, CarActivity.this);
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
-//                finish();
+                        databaseHelperMethods.insertCarModel(car);
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
             }
         });
 
@@ -90,9 +105,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             @Override
             public void onClick(View v) {
                 if (isStoragePermissionGranted()) {
-                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                    photoPickerIntent.setType("image/*");
-                    startActivityForResult(photoPickerIntent, REQUEST_PHOTO);
+                    startActivityPhotoPickerIntent();
                 }
             }
         });
@@ -116,21 +129,23 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             car.setPhoto(selectedImage.toString());
             mPhotoView.setImageBitmap(selectedImages);
         }
+        if (requestCode == REQUEST_COUNTRY) {
+            int idCountry = data.getIntExtra("ID_COUNTRY", 0);
+            databaseHelperMethods.insertMark(markEditText.getText().toString(), idCountry);
+//            car.setMark(databaseHelperMethods.getIdMarkFromName(markEditText.getText().toString()));
+        }
     }
 
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.v("ddddd", "Permission is granted");
                 return true;
             } else {
-                Log.v("ddddd", "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
             }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v("ddddd", "Permission is granted");
+        } else {
             return true;
         }
     }
@@ -139,11 +154,14 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.v("ddddd", "Permission: " + permissions[0] + "was " + grantResults[0]);
-            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-            photoPickerIntent.setType("image/*");
-            startActivityForResult(photoPickerIntent, REQUEST_PHOTO);
-            //resume tasks needing this permission
+            startActivityPhotoPickerIntent();
         }
     }
+
+    private void startActivityPhotoPickerIntent() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, REQUEST_PHOTO);
+    }
+
 }

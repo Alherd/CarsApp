@@ -9,11 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.adapter.CarAdapter;
+import com.example.alherd.carapp.adapter.RecyclerTouchListener;
 import com.example.alherd.carapp.database.DatabaseHelper;
+import com.example.alherd.carapp.utils.ToastShowing;
 
 public final class MainActivity extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase;
@@ -32,13 +36,27 @@ public final class MainActivity extends AppCompatActivity {
         sqLiteDatabase = databaseHelper.getWritableDatabase();
         cursor = getAllItems();
         carAdapter = new CarAdapter(this, cursor);
+      //  cursor.close();
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(MainActivity.this, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
+
     }
 
     private Cursor getAllItems() {
-        return sqLiteDatabase.query(DatabaseHelper.TABLE_CAR_MODELS,
+        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_CAR_MODELS,
                 null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
+        return cursor;
     }
 
     @Override
@@ -65,6 +83,7 @@ public final class MainActivity extends AppCompatActivity {
             return;
         }
         carAdapter = new CarAdapter(this, getAllItems());
+     //   getAllItems().close();
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Insert car successful", Toast.LENGTH_SHORT).show();

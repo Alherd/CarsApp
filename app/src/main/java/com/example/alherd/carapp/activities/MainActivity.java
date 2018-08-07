@@ -102,6 +102,18 @@ public final class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, CarActivity.class);
                 startActivityForResult(intent, 1);
                 return true;
+            case R.id.menu_item_up:
+                cursor = databaseHelperMethods.getAllItemsCostASC();
+                carAdapter = new CarAdapter(this, cursor);
+                recyclerView.setAdapter(carAdapter);
+                carAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.menu_item_down:
+                cursor = databaseHelperMethods.getAllItemsCostDESC();
+                carAdapter = new CarAdapter(this, cursor);
+                recyclerView.setAdapter(carAdapter);
+                carAdapter.notifyDataSetChanged();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

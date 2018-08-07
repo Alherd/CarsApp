@@ -157,6 +157,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                     }
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

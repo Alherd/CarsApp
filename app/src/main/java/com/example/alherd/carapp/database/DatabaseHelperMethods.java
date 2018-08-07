@@ -171,4 +171,17 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         }
     }
 
+    public Cursor getAllItemsCostASC() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor b = db.rawQuery("select * from " + TABLE_CAR_MODELS + " ORDER BY " +
+                COLUMN_COST_CAR_MODEL + " ;", null);
+        return b;
+    }
+
+    public Cursor getAllItemsCostDESC() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor b = db.rawQuery("select * from " + TABLE_CAR_MODELS + " ORDER BY " +
+                COLUMN_COST_CAR_MODEL + " DESC ;", null);
+        return b;
+    }
 }

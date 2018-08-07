@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_item_new_crime"
+        android:id="@+id/menu_item_confirm_new_car"
         android:icon="@drawable/ic_menu_add"
-        app:showAsAction="ifRoom|withText"
-        android:title="@string/new_car" />
-
+        android:title="@string/new_car"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/menu_item_up"
+        android:icon="@drawable/up"
+        android:title="Sort cents in ASC" />
+    <item
+        android:id="@+id/menu_item_down"
+        android:icon="@drawable/down"
+        android:title="Sorting cents in DESC" />
 </menu>

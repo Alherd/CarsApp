@@ -182,11 +182,5 @@
                 android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_button"
-            app:layout_constraintTop_toBottomOf="@id/photo_linear_layout" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

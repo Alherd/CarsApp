@@ -11,6 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +63,6 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
         startReleaseEditText = findViewById(R.id.start_release_model_edit_text);
         endReleaseEditText = findViewById(R.id.end_release_model_edit_text);
 
-        Button saveButton = findViewById(R.id.save_button);
         databaseHelperMethods = new DatabaseHelperMethods(this);
         ImageButton mPhotoButton = findViewById(R.id.crime_camera);
 
@@ -100,16 +102,33 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             }
         }
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                if (isStoragePermissionGranted()) {
+                    startActivityPhotoPickerIntent();
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.car_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_confirm_new_car:
                 String mark = markEditText.getText().toString();
                 if (titleEditText.getText().toString().equals("")) {
                     ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_title));
                 } else if (markEditText.getText().toString().equals("")) {
                     ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_mark));
-                } else if (costEditText.getText().toString().equals("")) {
-                    ToastShowing.postToastMessage(CarActivity.this, getString(R.string.input_cost));
+                } else if (costEditText.getText().toString().equals("") || !TextUtils.isDigitsOnly(costEditText.getText().toString())) {
+                    ToastShowing.postToastMessage(CarActivity.this, getString(R.string.incorrect_input_cost));
                 } else {
                     if (!databaseHelperMethods.isMarkExist(markEditText.getText().toString())) {
                         Intent intent = new Intent(CarActivity.this, CountryActivity.class);
@@ -137,17 +156,10 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                         finish();
                     }
                 }
-            }
-        });
-
-        mPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isStoragePermissionGranted()) {
-                    startActivityPhotoPickerIntent();
-                }
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

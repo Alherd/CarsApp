@@ -107,11 +107,8 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return Integer.parseInt(nameP);
     }
 
-    public Car createCarFromPosition(int position) {
+    public Car createCarFromPosition(int position, Cursor cursor) {
         Car car = new Car();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(DatabaseHelper.TABLE_CAR_MODELS,
-                null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
         cursor.moveToFirst();
         if (!cursor.move(position)) {
             return car;
@@ -141,7 +138,6 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         car.setEndRelease(endReleaseModelString);
         car.setPhoto(photoModelString);
 
-        cursor.close();
         return car;
     }
 

@@ -59,7 +59,7 @@ public final class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-                Car car = databaseHelperMethods.createCarFromPosition(position);
+                Car car = databaseHelperMethods.createCarFromPosition(position, cursor);
                 Intent intent = new Intent(MainActivity.this, CarActivity.class);
                 intent.putExtra("Car", car);
                 startActivityForResult(intent, 2);
@@ -69,8 +69,9 @@ public final class MainActivity extends AppCompatActivity {
         imageViewCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cursor = databaseHelperMethods.getAllItemsSortByCountry(userFilterCountry.getText().toString());
                 carAdapter = new CarAdapter(MainActivity.this,
-                        databaseHelperMethods.getAllItemsSortByCountry(userFilterCountry.getText().toString()));
+                        cursor);
                 recyclerView.setAdapter(carAdapter);
                 carAdapter.notifyDataSetChanged();
             }
@@ -79,8 +80,9 @@ public final class MainActivity extends AppCompatActivity {
         imageViewMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cursor = databaseHelperMethods.getAllItemsSortByMark(userFilterMark.getText().toString());
                 carAdapter = new CarAdapter(MainActivity.this,
-                        databaseHelperMethods.getAllItemsSortByMark(userFilterMark.getText().toString()));
+                        cursor);
                 recyclerView.setAdapter(carAdapter);
                 carAdapter.notifyDataSetChanged();
             }
@@ -96,7 +98,7 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_new_crime:
+            case R.id.menu_item_confirm_new_car:
                 Intent intent = new Intent(this, CarActivity.class);
                 startActivityForResult(intent, 1);
                 return true;
@@ -110,10 +112,10 @@ public final class MainActivity extends AppCompatActivity {
         if (data == null) {
             return;
         }
-        carAdapter = new CarAdapter(this, databaseHelperMethods.getAllItems());
-        recyclerView.setAdapter(carAdapter);
+        carAdapter = new CarAdapter(this, cursor);
         carAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Insert car successful", Toast.LENGTH_SHORT).show();
+        recyclerView.setAdapter(carAdapter);
+        Toast.makeText(this, R.string.operation_successful, Toast.LENGTH_SHORT).show();
     }
 
     @Override

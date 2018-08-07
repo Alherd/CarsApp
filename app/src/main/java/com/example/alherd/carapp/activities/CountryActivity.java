@@ -3,6 +3,8 @@ package com.example.alherd.carapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +15,6 @@ import com.example.alherd.carapp.utils.ToastShowing;
 
 public final class CountryActivity extends AppCompatActivity {
     private EditText editText;
-    private Button button;
     private DatabaseHelperMethods databaseHelperMethods;
 
     @Override
@@ -23,11 +24,18 @@ public final class CountryActivity extends AppCompatActivity {
 
         databaseHelperMethods = new DatabaseHelperMethods(CountryActivity.this);
         editText = findViewById(R.id.input_country_edit_text);
-        button = findViewById(R.id.confirm_button);
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.car_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_confirm_new_car:
                 String nameCountry = editText.getText().toString();
                 if (!nameCountry.equals("")) {
                     databaseHelperMethods.insertCountry(nameCountry);
@@ -38,7 +46,11 @@ public final class CountryActivity extends AppCompatActivity {
                 } else {
                     ToastShowing.postToastMessage(CountryActivity.this, "Please, input country");
                 }
-            }
-        });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
 }

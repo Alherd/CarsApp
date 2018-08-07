@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context=".activities.CountryActivity">
 
     <TextView
@@ -11,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Input country of this mark" />
+        android:paddingTop="50dp"
+        android:text="@string/input_country_of_this_mark"
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/input_country_edit_text"
@@ -19,10 +22,4 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/input_country_text_view" />
 
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Confirm"
-        app:layout_constraintTop_toBottomOf="@id/input_country_edit_text" />
 </android.support.constraint.ConstraintLayout>

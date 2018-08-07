@@ -22,15 +22,12 @@ import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.model.Car;
 
 public final class MainActivity extends AppCompatActivity {
-    private SQLiteDatabase sqLiteDatabase;
     private CarAdapter carAdapter;
     private Cursor cursor;
     private RecyclerView recyclerView;
     private DatabaseHelperMethods databaseHelperMethods;
     private EditText userFilterCountry;
-    private ImageView imageViewCountry;
     private EditText userFilterMark;
-    private ImageView imageViewMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +36,11 @@ public final class MainActivity extends AppCompatActivity {
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         userFilterCountry = findViewById(R.id.user_filter_country);
-        imageViewCountry = findViewById(R.id.image_country);
+        ImageView imageViewCountry = findViewById(R.id.image_country);
         userFilterMark = findViewById(R.id.user_filer_mark);
-        imageViewMark = findViewById(R.id.image_mark);
+        ImageView imageViewMark = findViewById(R.id.image_mark);
         recyclerView = findViewById(R.id.recycler_view_cars);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        sqLiteDatabase = databaseHelper.getWritableDatabase();
         databaseHelperMethods = new DatabaseHelperMethods(this);
         cursor = databaseHelperMethods.getAllItems();
         carAdapter = new CarAdapter(this, cursor);

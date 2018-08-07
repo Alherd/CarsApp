@@ -18,4 +18,5 @@
     <string name="incorrect_input_cost">Incorrect input cost</string>
     <string name="operation_successful">Operation successful</string>
     <string name="confirm">Confirm</string>
+    <string name="input_country_of_this_mark">Input country of this mark</string>
 </resources>

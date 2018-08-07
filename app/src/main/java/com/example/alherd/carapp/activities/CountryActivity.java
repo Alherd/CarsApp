@@ -11,7 +11,7 @@ import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.utils.ToastShowing;
 
-public class CountryActivity extends AppCompatActivity {
+public final class CountryActivity extends AppCompatActivity {
     private EditText editText;
     private Button button;
     private DatabaseHelperMethods databaseHelperMethods;

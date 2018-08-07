@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CarHolder extends RecyclerView.ViewHolder {
+public final class CarHolder extends RecyclerView.ViewHolder {
     private TextView titleModel;
     private ImageView photoModel;
     private TextView markAndCountryModel;

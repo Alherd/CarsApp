@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.UUID;
 
-public class Car implements Parcelable {
+public final class Car implements Parcelable {
     private String mId;
     private String title;
     private String mark;

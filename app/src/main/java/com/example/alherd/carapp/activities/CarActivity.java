@@ -20,7 +20,9 @@ import android.widget.ImageView;
 import com.example.alherd.carapp.R;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.model.Car;
+import com.example.alherd.carapp.utils.StringUtils;
 import com.example.alherd.carapp.utils.ToastShowing;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -80,15 +82,21 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             startReleaseEditText.setText(car1.getStartRelease());
             endReleaseEditText.setText(car1.getEndRelease());
 
-            InputStream is = getClass().getClassLoader().getResourceAsStream(car1.getPhoto());
-            Bitmap bm = BitmapFactory.decodeStream(is);
-            mPhotoView.setImageBitmap(bm);
-            try {
-                if(is!=null){
+            if (StringUtils.foo(car1.getPhoto(), "jpg")) {
+                InputStream is = getClass().getClassLoader().getResourceAsStream(car1.getPhoto());
+                Bitmap bm = BitmapFactory.decodeStream(is);
+                mPhotoView.setImageBitmap(bm);
+                try {
                     is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            } else if (!car1.getPhoto().equals("")) {
+                Picasso.with(this)
+                        .load(car1.getPhoto())
+                        .fit()
+                        .into(mPhotoView);
             }
         }
 

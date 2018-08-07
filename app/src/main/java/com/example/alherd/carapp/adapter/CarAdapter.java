@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.alherd.carapp.R;
 
-public class CarAdapter extends RecyclerView.Adapter<CarHolder> {
+public final class CarAdapter extends RecyclerView.Adapter<CarHolder> {
     private Context context;
     private Cursor cursor;
 

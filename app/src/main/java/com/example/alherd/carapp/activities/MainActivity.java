@@ -29,6 +29,8 @@ public final class MainActivity extends AppCompatActivity {
     private DatabaseHelperMethods databaseHelperMethods;
     private EditText userFilterCountry;
     private ImageView imageViewCountry;
+    private EditText userFilterMark;
+    private ImageView imageViewMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public final class MainActivity extends AppCompatActivity {
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         userFilterCountry = findViewById(R.id.user_filter_country);
         imageViewCountry = findViewById(R.id.image_country);
+        userFilterMark = findViewById(R.id.user_filer_mark);
+        imageViewMark = findViewById(R.id.image_mark);
         recyclerView = findViewById(R.id.recycler_view_cars);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sqLiteDatabase = databaseHelper.getWritableDatabase();
@@ -67,6 +71,16 @@ public final class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 carAdapter = new CarAdapter(MainActivity.this,
                         databaseHelperMethods.getAllItemsSortByCountry(userFilterCountry.getText().toString()));
+                recyclerView.setAdapter(carAdapter);
+                carAdapter.notifyDataSetChanged();
+            }
+        });
+
+        imageViewMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carAdapter = new CarAdapter(MainActivity.this,
+                        databaseHelperMethods.getAllItemsSortByMark(userFilterMark.getText().toString()));
                 recyclerView.setAdapter(carAdapter);
                 carAdapter.notifyDataSetChanged();
             }

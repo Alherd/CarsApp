@@ -163,4 +163,16 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
             return cursor;
         }
     }
+
+    public Cursor getAllItemsSortByMark(String mark) {
+        if (mark.equals("")) {
+            return getAllItems();
+        } else {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from " + TABLE_CAR_MODELS + ", " + TABLE_CAR_MARKS +
+                    " where " + COLUMN_NAME_CAR_MARK + " = '" + mark + "' AND " + COLUMN_ID_CAR_MODEL_MARK + " = " + COLUMN_ID_CAR_MARK, null);
+            return cursor;
+        }
+    }
+
 }

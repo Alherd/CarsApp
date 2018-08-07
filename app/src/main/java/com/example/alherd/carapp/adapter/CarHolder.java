@@ -66,13 +66,14 @@ public final class CarHolder extends RecyclerView.ViewHolder {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //     setFibonacciNumberOnUiThread(photoModel, bm);
 
-            } else if (!photoModelString.equals("")) {
+            } else if (!photoModelString.equals(" ")) {
                 Picasso.with(context)
                         .load(photoModelString)
                         .fit()
                         .into(photoModel);
+            } else {
+                photoModel.setImageBitmap(null);
             }
         }
         String titleModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));

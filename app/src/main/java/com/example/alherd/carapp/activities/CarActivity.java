@@ -45,7 +45,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
     private DatabaseHelperMethods databaseHelperMethods;
     private ImageView mPhotoView;
     private Car car = new Car();
-    private Car car1;
+    private Car carForUpdating;
     private boolean isSetPhoto;
 
     @Override
@@ -72,20 +72,20 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
 
         mPhotoView = (ImageView) findViewById(R.id.crime_photo);
 
-        car1 = (Car) getIntent().getParcelableExtra("Car");
-        if (car1 != null) {
-            titleEditText.setText(car1.getTitle());
-            markEditText.setText(databaseHelperMethods.getNameMarkFromId(car1.getMark()));
-            costEditText.setText(Integer.toString(car1.getCost()));
-            powerEditText.setText(car1.getPower());
-            doorsNumberEditText.setText(car1.getDoorsNumber());
-            bodyTypeEditText.setText(car1.getBodyType());
-            seatsNumberEditText.setText(car1.getSeatsNumber());
-            startReleaseEditText.setText(car1.getStartRelease());
-            endReleaseEditText.setText(car1.getEndRelease());
+        carForUpdating = (Car) getIntent().getParcelableExtra("Car");
+        if (carForUpdating != null) {
+            titleEditText.setText(carForUpdating.getTitle());
+            markEditText.setText(databaseHelperMethods.getNameMarkFromId(carForUpdating.getMark()));
+            costEditText.setText(Integer.toString(carForUpdating.getCost()));
+            powerEditText.setText(carForUpdating.getPower());
+            doorsNumberEditText.setText(carForUpdating.getDoorsNumber());
+            bodyTypeEditText.setText(carForUpdating.getBodyType());
+            seatsNumberEditText.setText(carForUpdating.getSeatsNumber());
+            startReleaseEditText.setText(carForUpdating.getStartRelease());
+            endReleaseEditText.setText(carForUpdating.getEndRelease());
 
-            if (StringUtils.foo(car1.getPhoto(), "jpg")) {
-                InputStream is = getClass().getClassLoader().getResourceAsStream(car1.getPhoto());
+            if (StringUtils.foo(carForUpdating.getPhoto(), "jpg")) {
+                InputStream is = getClass().getClassLoader().getResourceAsStream(carForUpdating.getPhoto());
                 Bitmap bm = BitmapFactory.decodeStream(is);
                 mPhotoView.setImageBitmap(bm);
                 try {
@@ -94,9 +94,9 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                     e.printStackTrace();
                 }
 
-            } else if (!car1.getPhoto().equals("")) {
+            } else if (!carForUpdating.getPhoto().equals(" ")) {
                 Picasso.with(this)
-                        .load(car1.getPhoto())
+                        .load(carForUpdating.getPhoto())
                         .fit()
                         .into(mPhotoView);
             }
@@ -144,14 +144,14 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                         car.setStartRelease(startReleaseEditText.getText().toString());
                         car.setEndRelease(endReleaseEditText.getText().toString());
 
-                        if (!isSetPhoto && car1 != null) {
-                            if(car1.getPhoto()!=null){
-                                car.setPhoto(car1.getPhoto());
+                        if (!isSetPhoto && carForUpdating != null) {
+                            if(carForUpdating.getPhoto()!=null){
+                                car.setPhoto(carForUpdating.getPhoto());
                             }
                         }
                         databaseHelperMethods.insertCarModel(car);
-                        if (car1 != null) {
-                            databaseHelperMethods.deleteCarModel(car1);
+                        if (carForUpdating != null) {
+                            databaseHelperMethods.deleteCarModel(carForUpdating);
                         }
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);

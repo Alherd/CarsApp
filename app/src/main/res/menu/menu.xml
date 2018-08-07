@@ -10,9 +10,9 @@
     <item
         android:id="@+id/menu_item_up"
         android:icon="@drawable/up"
-        android:title="Sort cents in ASC" />
+        android:title="@string/sort_cost_in_asc" />
     <item
         android:id="@+id/menu_item_down"
         android:icon="@drawable/down"
-        android:title="Sorting cents in DESC" />
+        android:title="@string/sorting_cost_in_desc" />
 </menu>

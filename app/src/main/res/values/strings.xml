@@ -19,4 +19,6 @@
     <string name="operation_successful">Operation successful</string>
     <string name="confirm">Confirm</string>
     <string name="input_country_of_this_mark">Input country of this mark</string>
+    <string name="sorting_cost_in_desc">Sorting cost in DESC</string>
+    <string name="sort_cost_in_asc">Sort cost in ASC</string>
 </resources>

@@ -48,7 +48,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         if (car.getPhoto() != null) {
             contentValues.put(COLUMN_PHOTO_CAR_MODEL, car.getPhoto());
         } else {
-            contentValues.put(COLUMN_PHOTO_CAR_MODEL, "");
+            contentValues.put(COLUMN_PHOTO_CAR_MODEL, " ");
         }
 
         db.insert(TABLE_CAR_MODELS, null, contentValues);

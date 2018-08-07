@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.UUID;
 
 public class Car implements Parcelable {
-    private UUID mId;
+    private String mId;
     private String title;
     private String mark;
     private int cost;
@@ -19,14 +19,15 @@ public class Car implements Parcelable {
     private String photo;
 
     public Car() {
-        this(UUID.randomUUID());
+        this(String.valueOf(UUID.randomUUID()));
     }
 
-    public Car(UUID id) {
+    public Car(String id) {
         mId = id;
     }
 
     protected Car(Parcel in) {
+        mId = in.readString();
         title = in.readString();
         mark = in.readString();
         cost = in.readInt();
@@ -39,11 +40,11 @@ public class Car implements Parcelable {
         photo = in.readString();
     }
 
-    public UUID getId() {
+    public String getId() {
         return mId;
     }
 
-    public void setmId(UUID mId) {
+    public void setmId(String mId) {
         this.mId = mId;
     }
 
@@ -134,6 +135,7 @@ public class Car implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mId);
         parcel.writeString(title);
         parcel.writeString(mark);
         parcel.writeInt(cost);

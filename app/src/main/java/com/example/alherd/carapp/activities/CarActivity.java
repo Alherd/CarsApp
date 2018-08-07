@@ -41,6 +41,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
     private DatabaseHelperMethods databaseHelperMethods;
     private ImageView mPhotoView;
     private Car car = new Car();
+    Car car1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
 
         mPhotoView = (ImageView) findViewById(R.id.crime_photo);
 
-        Car car1 = (Car) getIntent().getParcelableExtra("Car");
+        car1 = (Car) getIntent().getParcelableExtra("Car");
         if (car1 != null) {
             titleEditText.setText(car1.getTitle());
             markEditText.setText(databaseHelperMethods.getNameMarkFromId(car1.getMark()));
@@ -114,7 +115,13 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                         car.setStartRelease(startReleaseEditText.getText().toString());
                         car.setEndRelease(endReleaseEditText.getText().toString());
 
+                        if (car.getPhoto() == null && car1.getPhoto() != null) {
+                            car.setPhoto(car1.getPhoto());
+                        }
                         databaseHelperMethods.insertCarModel(car);
+                        if (car1 != null) {
+                            databaseHelperMethods.deleteCarModel(car1);
+                        }
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();

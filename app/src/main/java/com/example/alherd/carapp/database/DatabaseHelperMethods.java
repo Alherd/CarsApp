@@ -9,6 +9,8 @@ import com.example.alherd.carapp.activities.MainActivity;
 import com.example.alherd.carapp.model.Car;
 import com.example.alherd.carapp.utils.ToastShowing;
 
+import java.util.UUID;
+
 public final class DatabaseHelperMethods extends DatabaseHelper {
     public DatabaseHelperMethods(Context context) {
         super(context);
@@ -54,6 +56,11 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         }
 
         db.insert(TABLE_CAR_MODELS, null, contentValues);
+    }
+
+    public void deleteCarModel(Car car) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(TABLE_CAR_MODELS, COLUMN_ID_CAR_MODEL + " = '" + car.getId() + "'", null);
     }
 
     public boolean isMarkExist(String mark) {
@@ -110,6 +117,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
             return car;
         }
 
+        String id = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL));
         String titleModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
         int costModelString = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL)));
@@ -121,6 +129,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         String endReleaseModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
         String photoModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PHOTO_CAR_MODEL));
 
+        car.setmId(id);
         car.setTitle(titleModelString);
         car.setMark(idMark);
         car.setCost(costModelString);

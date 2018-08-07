@@ -2,11 +2,8 @@ package com.example.alherd.carapp.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,12 +17,8 @@ import com.example.alherd.carapp.model.Car;
 import com.example.alherd.carapp.utils.StringUtils;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class CarHolder extends RecyclerView.ViewHolder {
     private TextView titleModel;
@@ -75,7 +68,7 @@ public class CarHolder extends RecyclerView.ViewHolder {
                 }
                 //     setFibonacciNumberOnUiThread(photoModel, bm);
 
-            } else {
+            } else if (!photoModelString.equals("")) {
                 Picasso.with(context)
                         .load(photoModelString)
                         .fit()
@@ -84,18 +77,17 @@ public class CarHolder extends RecyclerView.ViewHolder {
         }
         String titleModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NAME_CAR_MODEL));
         titleModel.setText(titleModelString);
-        //      setFibonacciNumberOnUiThread(titleModel, titleModelString);
+
         String idMark = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID_CAR_MODEL_MARK));
         markAndCountryModel.setText(databaseHelperMethods.getNameMarkFromId(idMark) +
                 " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
-        //     setFibonacciNumberOnUiThread(markAndCountryModel, databaseHelperMethods.getNameMarkFromId(idMark) +
-//                " (" + databaseHelperMethods.getManufacturerFromIdMark(idMark) + ")");
+
         String costModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_COST_CAR_MODEL));
         costModel.setText("$" + costModelString);
-        //   setFibonacciNumberOnUiThread(costModel, "$" + costModelString);
+
         String powerModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_POWER_CAR_MODEL));
         powerModel.setText(powerModelString);
-        //   setFibonacciNumberOnUiThread(powerModel, powerModelString);
+
         String doorsNumberModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DOORS_NUMBER_CAR_MODEL));
         doorsNumberModel.setText(doorsNumberModelString);
 
@@ -110,23 +102,5 @@ public class CarHolder extends RecyclerView.ViewHolder {
 
         String endReleaseModelString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RELEASE_END_CAR_MODEL));
         endReleaseModel.setText(endReleaseModelString);
-    }
-
-    private void setFibonacciNumberOnUiThread(final TextView textView, final String CONCLUSION_STRING) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                textView.setText(CONCLUSION_STRING);
-            }
-        });
-    }
-
-    private void setFibonacciNumberOnUiThread(final ImageView imageView, final Bitmap bitmap) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                imageView.setImageBitmap(bitmap);
-            }
-        });
     }
 }

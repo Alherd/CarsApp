@@ -12,4 +12,7 @@
     <string name="input_title">Please, input title of car</string>
     <string name="input_mark">Please, input mark of car</string>
     <string name="input_cost">Please, input cost of car</string>
+    <string name="search">Search</string>
+    <string name="country">Country</string>
+    <string name="mark">Mark</string>
 </resources>

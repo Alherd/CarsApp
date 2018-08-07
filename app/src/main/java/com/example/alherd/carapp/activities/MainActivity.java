@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.alherd.carapp.R;
@@ -18,7 +20,6 @@ import com.example.alherd.carapp.adapter.RecyclerTouchListener;
 import com.example.alherd.carapp.database.DatabaseHelper;
 import com.example.alherd.carapp.database.DatabaseHelperMethods;
 import com.example.alherd.carapp.model.Car;
-import com.example.alherd.carapp.utils.ToastShowing;
 
 public final class MainActivity extends AppCompatActivity {
     private SQLiteDatabase sqLiteDatabase;
@@ -26,6 +27,8 @@ public final class MainActivity extends AppCompatActivity {
     private Cursor cursor;
     private RecyclerView recyclerView;
     private DatabaseHelperMethods databaseHelperMethods;
+    private EditText userFilterCountry;
+    private ImageView imageViewCountry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +36,14 @@ public final class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        userFilterCountry = findViewById(R.id.user_filter_country);
+        imageViewCountry = findViewById(R.id.image_country);
         recyclerView = findViewById(R.id.recycler_view_cars);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sqLiteDatabase = databaseHelper.getWritableDatabase();
         databaseHelperMethods = new DatabaseHelperMethods(this);
-        cursor = getAllItems();
+        cursor = databaseHelperMethods.getAllItems();
         carAdapter = new CarAdapter(this, cursor);
-        //  cursor.close();
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
 
@@ -58,12 +62,15 @@ public final class MainActivity extends AppCompatActivity {
             }
         }));
 
-    }
-
-    private Cursor getAllItems() {
-        Cursor cursor = sqLiteDatabase.query(DatabaseHelper.TABLE_CAR_MODELS,
-                null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
-        return cursor;
+        imageViewCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carAdapter = new CarAdapter(MainActivity.this,
+                        databaseHelperMethods.getAllItemsSortByCountry(userFilterCountry.getText().toString()));
+                recyclerView.setAdapter(carAdapter);
+                carAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -89,8 +96,7 @@ public final class MainActivity extends AppCompatActivity {
         if (data == null) {
             return;
         }
-        carAdapter = new CarAdapter(this, getAllItems());
-        //   getAllItems().close();
+        carAdapter = new CarAdapter(this, databaseHelperMethods.getAllItems());
         recyclerView.setAdapter(carAdapter);
         carAdapter.notifyDataSetChanged();
         Toast.makeText(this, "Insert car successful", Toast.LENGTH_SHORT).show();

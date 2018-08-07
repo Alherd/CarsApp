@@ -144,4 +144,23 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         cursor.close();
         return car;
     }
+
+    public Cursor getAllItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_CAR_MODELS,
+                null, null, null, null, null, DatabaseHelper.COLUMN_NAME_CAR_MODEL);
+        return cursor;
+    }
+
+    public Cursor getAllItemsSortByCountry(String country) {
+        if (country.equals("")) {
+            return getAllItems();
+        } else {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from " + TABLE_CAR_MODELS + ", " + TABLE_MANUFACTURERS + ", " + TABLE_CAR_MARKS +
+                    " where " + COLUMN_NAME_COUNTRY_MANUFACTURER + " = '" + country + "' AND " + COLUMN_ID_COUNTRY_CAR_MARK + " = " +
+                    COLUMN_ID_COUNTRY_MANUFACTURER + " AND " + COLUMN_ID_CAR_MODEL_MARK + " = " + COLUMN_ID_CAR_MARK, null);
+            return cursor;
+        }
+    }
 }

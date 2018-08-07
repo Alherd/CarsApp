@@ -41,7 +41,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
     private DatabaseHelperMethods databaseHelperMethods;
     private ImageView mPhotoView;
     private Car car = new Car();
-    Car car1;
+    private Car car1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,9 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             Bitmap bm = BitmapFactory.decodeStream(is);
             mPhotoView.setImageBitmap(bm);
             try {
-                is.close();
+                if(is!=null){
+                    is.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

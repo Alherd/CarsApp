@@ -1,10 +1,10 @@
 package com.example.alherd.carapp.utils;
 
 public final class StringUtils {
-    public static boolean foo (String line, String reg) {
-        String[] strings = line.split("\\."); // делим строку на отдельные слова
+    public static boolean foo(String line, String reg) {
+        String[] strings = line.split("\\.");
         for (String word : strings) {
-            if (word.matches(reg)) {  // проверяем в цикле каждое отдельное слово
+            if (word.matches(reg)) {
                 return true;
             }
         }

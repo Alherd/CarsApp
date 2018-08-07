@@ -15,7 +15,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,6 +46,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
     private ImageView mPhotoView;
     private Car car = new Car();
     private Car car1;
+    private boolean isSetPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,8 +144,10 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
                         car.setStartRelease(startReleaseEditText.getText().toString());
                         car.setEndRelease(endReleaseEditText.getText().toString());
 
-                        if (car.getPhoto() == null && car1.getPhoto() != null) {
-                            car.setPhoto(car1.getPhoto());
+                        if (!isSetPhoto && car1 != null) {
+                            if(car1.getPhoto()!=null){
+                                car.setPhoto(car1.getPhoto());
+                            }
                         }
                         databaseHelperMethods.insertCarModel(car);
                         if (car1 != null) {
@@ -179,6 +181,7 @@ public final class CarActivity extends AppCompatActivity implements ActivityComp
             }
             Bitmap selectedImages = BitmapFactory.decodeStream(imageStream);
             car.setPhoto(selectedImage.toString());
+            isSetPhoto = true;
             mPhotoView.setImageBitmap(selectedImages);
         }
         if (requestCode == REQUEST_COUNTRY) {

@@ -5,18 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.alherd.carapp.activities.MainActivity;
 import com.example.alherd.carapp.model.Car;
-import com.example.alherd.carapp.utils.ToastShowing;
-
-import java.util.UUID;
 
 public final class DatabaseHelperMethods extends DatabaseHelper {
     public DatabaseHelperMethods(Context context) {
         super(context);
     }
 
-    public String getNameMarkFromId(String id) {
+    public String getNameMarkFromId(final String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor b = db.rawQuery("select " + COLUMN_NAME_CAR_MARK + " from " + TABLE_CAR_MARKS + " where " + COLUMN_ID_CAR_MARK +
                 " = '" + id + "' ;", null);
@@ -26,7 +22,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return nameP;
     }
 
-    public String getManufacturerFromIdMark(String id) {
+    public String getManufacturerFromIdMark(final String id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor b = db.rawQuery("select * from " + TABLE_CAR_MARKS + ", " + TABLE_MANUFACTURERS +
                 " where " + COLUMN_ID_CAR_MARK + " = '" + id + "' AND " + COLUMN_ID_COUNTRY_CAR_MARK +
@@ -37,7 +33,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return nameP;
     }
 
-    public void insertCarModel(Car car) {
+    public void insertCarModel(final Car car) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_CAR_MODEL, car.getTitle());
@@ -58,12 +54,12 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         db.insert(TABLE_CAR_MODELS, null, contentValues);
     }
 
-    public void deleteCarModel(Car car) {
+    public void deleteCarModel(final Car car) {
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_CAR_MODELS, COLUMN_ID_CAR_MODEL + " = '" + car.getId() + "'", null);
     }
 
-    public boolean isMarkExist(String mark) {
+    public boolean isMarkExist(final String mark) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + TABLE_CAR_MARKS + " where " + COLUMN_NAME_CAR_MARK + " = '" + mark + "';", null);
         int a = cursor.getCount();
@@ -71,7 +67,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return a != 0;
     }
 
-    public void insertMark(String mark, int idCountry) {
+    public void insertMark(final String mark, final int idCountry) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.COLUMN_NAME_CAR_MARK, mark);
@@ -80,7 +76,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         db.insert(TABLE_CAR_MARKS, null, contentValues);
     }
 
-    public int getIdMarkFromName(String name) {
+    public int getIdMarkFromName(final String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor b = db.rawQuery("select * from " + TABLE_CAR_MARKS +
                 " where " + COLUMN_NAME_CAR_MARK + " = '" + name + "';", null);
@@ -90,14 +86,14 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return Integer.parseInt(nameP);
     }
 
-    public void insertCountry(String nameCountry) {
+    public void insertCountry(final String nameCountry) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.COLUMN_NAME_COUNTRY_MANUFACTURER, nameCountry);
         db.insert(TABLE_MANUFACTURERS, null, contentValues);
     }
 
-    public int getIdCountryFromName(String name) {
+    public int getIdCountryFromName(final String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor b = db.rawQuery("select * from " + TABLE_MANUFACTURERS +
                 " where " + COLUMN_NAME_COUNTRY_MANUFACTURER + " = '" + name + "';", null);
@@ -107,7 +103,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return Integer.parseInt(nameP);
     }
 
-    public Car createCarFromPosition(int position, Cursor cursor) {
+    public Car createCarFromPosition(final int position, final Cursor cursor) {
         Car car = new Car();
         cursor.moveToFirst();
         if (!cursor.move(position)) {
@@ -148,7 +144,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         return cursor;
     }
 
-    public Cursor getAllItemsSortByCountry(String country) {
+    public Cursor getAllItemsSortByCountry(final String country) {
         if (country.equals("")) {
             return getAllItems();
         } else {
@@ -160,7 +156,7 @@ public final class DatabaseHelperMethods extends DatabaseHelper {
         }
     }
 
-    public Cursor getAllItemsSortByMark(String mark) {
+    public Cursor getAllItemsSortByMark(final String mark) {
         if (mark.equals("")) {
             return getAllItems();
         } else {
